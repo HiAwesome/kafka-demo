@@ -1,5 +1,6 @@
-package com.moqi.bean;
+package com.moqi.serializer;
 
+import com.moqi.bean.Customer;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.header.Headers;
 import org.apache.kafka.common.serialization.Serializer;

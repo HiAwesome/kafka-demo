@@ -9,6 +9,14 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
+    <repositories>
+        <repository>
+            <id>Confluent</id>
+            <name>Confluent Public Repositories</name>
+            <url>https://packages.confluent.io/maven/</url>
+        </repository>
+    </repositories>
+
 
     <properties>
         <!-- source encoding -->
@@ -26,6 +34,7 @@
         <surefire-junit47.version>3.0.0-M3</surefire-junit47.version>
         <kafka.version>2.6.0</kafka.version>
         <avro.version>1.10.0</avro.version>
+        <kafka-avro-serializer.version>5.3.0</kafka-avro-serializer.version>
 
         <!-- common tool library -->
         <slf4j.version>1.7.29</slf4j.version>
@@ -145,6 +154,12 @@
             <groupId>org.apache.avro</groupId>
             <artifactId>avro</artifactId>
             <version>${avro.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.confluent</groupId>
+            <artifactId>kafka-avro-serializer</artifactId>
+            <version>${kafka-avro-serializer.version}</version>
         </dependency>
         <!-- avro end -->
     </dependencies>
