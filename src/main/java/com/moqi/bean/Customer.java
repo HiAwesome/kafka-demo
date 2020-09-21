@@ -1,6 +1,8 @@
 package com.moqi.bean;
 
 /**
+ * Customer Bean 类
+ *
  * @author moqi
  * On 9/21/20 16:40
  */

@@ -11,6 +11,8 @@ import java.util.Properties;
 import java.util.Random;
 
 /**
+ * AvroDemo
+ *
  * schema.registry.url 的问题，参考 [How to set schema.registry.URL?](https://stackoverflow.com/a/51904064),
  * 先从这里 [Confluent Platform](https://www.confluent.io/download/) 下载一个 Self managed event streaming platform,
  * 填写 email，选择手动部署，选择 tar，最终下载一个类似名为 confluent-5.5.1-2.12.tar.gz 的文件，然后解压，

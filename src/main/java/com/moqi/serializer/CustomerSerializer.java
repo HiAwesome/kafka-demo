@@ -12,6 +12,8 @@ import java.util.Objects;
 
 
 /**
+ * 自定义序列化
+ *
  * @author moqi
  * On 9/21/20 16:41
  */
