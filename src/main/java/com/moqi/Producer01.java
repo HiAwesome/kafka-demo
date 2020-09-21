@@ -1,6 +1,7 @@
 package com.moqi;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerRecord;
 
 import java.util.Properties;
 
@@ -12,16 +13,26 @@ import java.util.Properties;
 public class Producer01 {
 
     public static void main(String[] args) {
-
+        fireAndForget();
     }
 
-    public static void getProducer() {
+    private static KafkaProducer<String, String> getProducer() {
         Properties kafkaProps = new Properties();
         kafkaProps.put("bootstrap.servers", "localhost:9092");
         kafkaProps.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         kafkaProps.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
-        KafkaProducer<String, String> producer = new KafkaProducer<>(kafkaProps);
+        return new KafkaProducer<>(kafkaProps);
+    }
+
+    /**
+     * 发送并忘记
+     */
+    private static void fireAndForget() {
+        KafkaProducer<String, String> producer = getProducer();
+        ProducerRecord<String, String> record = new ProducerRecord<>("test", "Precision Products", "France");
+
+        producer.send(record);
     }
 
 }
