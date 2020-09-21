@@ -1,4 +1,4 @@
-package com.moqi;
+package com.moqi.producer;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.Callback;
