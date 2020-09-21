@@ -69,7 +69,7 @@ public class Producer01 {
 
         @Override
         public void onCompletion(RecordMetadata metadata, Exception e) {
-            if (!Objects.isNull(e)) {
+            if (Objects.nonNull(e)) {
                 log.error("metadata:{}, e:{}", metadata, e);
             }
         }
