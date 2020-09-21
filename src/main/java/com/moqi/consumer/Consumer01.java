@@ -27,21 +27,23 @@ public class Consumer01 {
         kafkaProps.put("group.id", "HelloWorld");
         kafkaProps.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         kafkaProps.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-        kafkaProps.put("auto.offset.reset", "earliest");
 
         return new KafkaConsumer<>(kafkaProps);
     }
 
     private static void subscribe() {
         KafkaConsumer<String, String> consumer = getConsumer();
-        consumer.subscribe(Collections.singleton("test"));
+        consumer.subscribe(Collections.singletonList("test"));
 
         try {
             //noinspection InfiniteLoopStatement
             while (true) {
                 ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100L));
-                records.forEach(x -> log.debug("topic:{}, partition={}, offset={}, customer={}, value={}",
+                records.forEach(x -> log.info("topic:{}, partition={}, offset={}, customer={}, value={}",
                         x.topic(), x.partition(), x.offset(), x.key(), x.value()));
+
+                // 异步提交
+                consumer.commitAsync();
             }
         } finally {
             consumer.close();

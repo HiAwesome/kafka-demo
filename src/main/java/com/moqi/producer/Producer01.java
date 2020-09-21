@@ -8,6 +8,7 @@ import org.apache.kafka.clients.producer.RecordMetadata;
 
 import java.util.Objects;
 import java.util.Properties;
+import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -19,9 +20,13 @@ import java.util.concurrent.ExecutionException;
 @Slf4j
 public class Producer01 {
 
+    private static final Random RANDOM = new Random();
+
     public static void main(String[] args) throws Exception {
-        for (int i = 0; i < 100; i++) {
-            Thread.sleep(1000L);
+        //noinspection InfiniteLoopStatement
+        while (true) {
+            //noinspection BusyWait
+            Thread.sleep(10000L);
             fireAndForget();
             syncSend();
             asyncSend();
@@ -42,7 +47,7 @@ public class Producer01 {
      */
     private static void fireAndForget() {
         KafkaProducer<String, String> producer = getProducer();
-        ProducerRecord<String, String> record = new ProducerRecord<>("test", "Precision Products", "fireAndForget");
+        ProducerRecord<String, String> record = new ProducerRecord<>("test", "asyncSend" + RANDOM.nextInt(10000));
 
         producer.send(record);
     }
@@ -52,7 +57,7 @@ public class Producer01 {
      */
     private static void syncSend() throws ExecutionException, InterruptedException {
         KafkaProducer<String, String> producer = getProducer();
-        ProducerRecord<String, String> record = new ProducerRecord<>("test", "Precision Products", "syncSend");
+        ProducerRecord<String, String> record = new ProducerRecord<>("test", "asyncSend" + RANDOM.nextInt(10000));
 
         RecordMetadata recordMetadata = producer.send(record).get();
         long offset = recordMetadata.offset();
@@ -65,7 +70,7 @@ public class Producer01 {
      */
     private static void asyncSend() {
         KafkaProducer<String, String> producer = getProducer();
-        ProducerRecord<String, String> record = new ProducerRecord<>("test", "Precision Products", "asyncSend");
+        ProducerRecord<String, String> record = new ProducerRecord<>("test", "asyncSend" + RANDOM.nextInt(10000));
 
         producer.send(record, new DemoProducerCallback());
     }
