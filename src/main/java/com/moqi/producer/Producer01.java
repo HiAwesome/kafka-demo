@@ -20,9 +20,12 @@ import java.util.concurrent.ExecutionException;
 public class Producer01 {
 
     public static void main(String[] args) throws Exception {
-        fireAndForget();
-        syncSend();
-        asyncSend();
+        for (int i = 0; i < 100; i++) {
+            Thread.sleep(1000L);
+            fireAndForget();
+            syncSend();
+            asyncSend();
+        }
     }
 
     private static KafkaProducer<String, String> getProducer() {
