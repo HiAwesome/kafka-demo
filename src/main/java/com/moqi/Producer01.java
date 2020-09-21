@@ -1,10 +1,12 @@
 package com.moqi;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 
+import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
@@ -16,7 +18,9 @@ import java.util.concurrent.ExecutionException;
 public class Producer01 {
 
     public static void main(String[] args) throws Exception {
+        fireAndForget();
         syncSend();
+        asyncSend();
     }
 
     private static KafkaProducer<String, String> getProducer() {
@@ -33,7 +37,7 @@ public class Producer01 {
      */
     private static void fireAndForget() {
         KafkaProducer<String, String> producer = getProducer();
-        ProducerRecord<String, String> record = new ProducerRecord<>("test", "Precision Products", "France");
+        ProducerRecord<String, String> record = new ProducerRecord<>("test", "Precision Products", "fireAndForget");
 
         producer.send(record);
     }
@@ -43,7 +47,7 @@ public class Producer01 {
      */
     private static void syncSend() throws ExecutionException, InterruptedException {
         KafkaProducer<String, String> producer = getProducer();
-        ProducerRecord<String, String> record = new ProducerRecord<>("test", "Precision Products", "France");
+        ProducerRecord<String, String> record = new ProducerRecord<>("test", "Precision Products", "syncSend");
 
         RecordMetadata recordMetadata = producer.send(record).get();
         long offset = recordMetadata.offset();
@@ -51,4 +55,23 @@ public class Producer01 {
         log.info("offset:{}, partition:{}", offset, partition);
     }
 
+    /**
+     * 异步发送
+     */
+    private static void asyncSend() {
+        KafkaProducer<String, String> producer = getProducer();
+        ProducerRecord<String, String> record = new ProducerRecord<>("test", "Precision Products", "asyncSend");
+
+        producer.send(record, new DemoProducerCallback());
+    }
+
+    private static class DemoProducerCallback implements Callback {
+
+        @Override
+        public void onCompletion(RecordMetadata metadata, Exception exception) {
+            if (!Objects.isNull(exception)) {
+                exception.printStackTrace();
+            }
+        }
+    }
 }
