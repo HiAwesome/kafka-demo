@@ -68,10 +68,11 @@ public class Producer01 {
     private static class DemoProducerCallback implements Callback {
 
         @Override
-        public void onCompletion(RecordMetadata metadata, Exception exception) {
-            if (!Objects.isNull(exception)) {
-                exception.printStackTrace();
+        public void onCompletion(RecordMetadata metadata, Exception e) {
+            if (!Objects.isNull(e)) {
+                log.error("metadata:{}, e:{}", metadata, e);
             }
         }
+
     }
 }
