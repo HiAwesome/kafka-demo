@@ -24,6 +24,7 @@
         <byte-buddy.version>1.10.1</byte-buddy.version>
         <gmavenplus-plugin.version>1.7.1</gmavenplus-plugin.version>
         <surefire-junit47.version>3.0.0-M3</surefire-junit47.version>
+        <kafka.version>2.6.0</kafka.version>
 
         <!-- common tool library -->
         <slf4j.version>1.7.29</slf4j.version>
@@ -123,6 +124,20 @@
             <version>${guava.version}</version>
         </dependency>
         <!-- common tool library end -->
+
+        <!-- kafka begin -->
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka_2.13</artifactId>
+            <version>${kafka.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <version>${kafka.version}</version>
+        </dependency>
+        <!-- kafka end -->
     </dependencies>
 
     <build>
