@@ -26,7 +26,7 @@ public class Producer01 {
         //noinspection InfiniteLoopStatement
         while (true) {
             //noinspection BusyWait
-            Thread.sleep(10000L);
+            Thread.sleep(RANDOM.nextInt(1000));
             fireAndForget();
             syncSend();
             asyncSend();
