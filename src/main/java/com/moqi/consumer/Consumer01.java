@@ -28,7 +28,7 @@ public class Consumer01 {
         userDefineSubscribe();
     }
 
-    private static KafkaConsumer<String, String> getConsumer() {
+    public static KafkaConsumer<String, String> getConsumer() {
         Properties kafkaProps = new Properties();
         kafkaProps.put("bootstrap.servers", "localhost:9092");
         kafkaProps.put("group.id", "HelloWorld");
