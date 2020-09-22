@@ -2,12 +2,10 @@ package com.moqi.serializer;
 
 import com.moqi.bean.Customer;
 import org.apache.kafka.common.errors.SerializationException;
-import org.apache.kafka.common.header.Headers;
 import org.apache.kafka.common.serialization.Serializer;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
 import java.util.Objects;
 
 
@@ -18,11 +16,6 @@ import java.util.Objects;
  * On 9/21/20 16:41
  */
 public class CustomerSerializer implements Serializer<Customer> {
-
-    @Override
-    public void configure(Map<String, ?> configs, boolean isKey) {
-        // 不做任何配置
-    }
 
     /**
      * Customer对象被序列化成：
@@ -59,15 +52,5 @@ public class CustomerSerializer implements Serializer<Customer> {
         }
     }
 
-    @Override
-    public byte[] serialize(String topic, Headers headers, Customer data) {
-        // 暂时不处理参数 headers
-        return serialize(topic, data);
-    }
-
-    @Override
-    public void close() {
-        // 不需要关闭任何东西
-    }
 }
 
