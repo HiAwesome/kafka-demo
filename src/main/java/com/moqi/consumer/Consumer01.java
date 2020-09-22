@@ -46,7 +46,12 @@ public class Consumer01 {
                 consumer.commitAsync();
             }
         } finally {
-            consumer.close();
+            try {
+                // 同步提交
+                consumer.commitSync();
+            } finally {
+                consumer.close();
+            }
         }
     }
 
