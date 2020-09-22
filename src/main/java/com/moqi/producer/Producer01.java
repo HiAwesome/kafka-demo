@@ -13,6 +13,8 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * Producer Demo
+ * <p>
+ * bin/kafka-topics.sh --bootstrap-server localhost:9092 --create --topic test
  *
  * @author moqi
  * On 9/21/20 15:50

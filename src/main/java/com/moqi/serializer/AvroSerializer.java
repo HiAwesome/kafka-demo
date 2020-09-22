@@ -11,7 +11,7 @@ import java.util.Properties;
 import java.util.Random;
 
 /**
- * AvroDemo
+ * AvroSerializer
  *
  * schema.registry.url 的问题，参考 [How to set schema.registry.URL?](https://stackoverflow.com/a/51904064),
  * 先从这里 [Confluent Platform](https://www.confluent.io/download/) 下载一个 Self managed event streaming platform,
@@ -19,20 +19,25 @@ import java.util.Random;
  * 进入文件夹 etc/schema-registry/schema-registry.properties 设定 listeners=http://localhost:8081,
  * 然后返回文件夹顶级目录运行 bin/schema-registry-start etc/schema-registry/schema-registry.properties 即可。
  *
+ * bin/kafka-topics.sh --bootstrap-server localhost:9092 --create --topic customer
+ *
  * @author moqi
  * On 9/21/20 17:05
  */
 
-public class AvroDemo {
+public class AvroSerializer {
 
     private static final Random random = new Random();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Producer<String, GenericRecord> producer = getProducer();
 
         Schema schema = getSchema();
 
-        for (int i = 0; i < 100; i++) {
+        //noinspection InfiniteLoopStatement
+        while (true) {
+            //noinspection BusyWait
+            Thread.sleep(random.nextInt(10000));
             int randomCode = random.nextInt(100000);
             String name = "ExampleCustomer" + randomCode;
             String email = "Example" + randomCode + "@example.com";
@@ -42,7 +47,7 @@ public class AvroDemo {
             customer.put("name", name);
             customer.put("email", email);
 
-            ProducerRecord<String, GenericRecord> data = new ProducerRecord<>("test", name, customer);
+            ProducerRecord<String, GenericRecord> data = new ProducerRecord<>("customer", name, customer);
             producer.send(data);
         }
     }
@@ -50,7 +55,7 @@ public class AvroDemo {
     private static Producer<String, GenericRecord> getProducer() {
         Properties kafkaProps = new Properties();
         kafkaProps.put("bootstrap.servers", "localhost:9092");
-        kafkaProps.put("key.serializer", "io.confluent.kafka.serializers.KafkaAvroSerializer");
+        kafkaProps.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         kafkaProps.put("value.serializer", "io.confluent.kafka.serializers.KafkaAvroSerializer");
         kafkaProps.put("schema.registry.url", "http://localhost:8081");
 
